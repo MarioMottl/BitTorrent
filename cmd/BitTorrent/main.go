@@ -4,14 +4,22 @@ import (
 	"log"
 	"os"
 
-	"github.com/MarioMottl/BitTorrent/blob/main/pkg/torrentfile"
+	"github.com/MarioMottl/BitTorrent/pkg/torrentfile"
 )
 
 func main() {
 	inPath := os.Args[1]
 	outPath := os.Args[2]
 
-	tf, err := torrentfile.Open(inPath)
+	file, err := os.Open(inPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tf, err := torrentfile.OpenTorrentFile(file)
+	if err != nil {
+		log.Fatal(err)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
